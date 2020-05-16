@@ -93,7 +93,8 @@ namespace arena.combat
             Ray ray = new Ray(mainCam.transform.position, Forward);
             RaycastHit rhit;
             if (Physics.Raycast(ray, out rhit, maxDistance,
-                ~(1 << LayerMask.NameToLayer("Explosion"))))
+                ~(1 << LayerMask.NameToLayer("Explosion") |
+                1 << LayerMask.NameToLayer("Ignore Raycast"))))
             {
                 GameObject ParticleObj = Instantiate(HitEffect.gameObject);
                 ParticleObj.transform.position = rhit.point;

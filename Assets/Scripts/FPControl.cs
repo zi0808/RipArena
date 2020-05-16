@@ -10,14 +10,15 @@ public class FPControl : MonoBehaviour
     public float DashTime = 0.15f;
     public float JumpForce = 10f;
     public float Gravity = 20f;
+    public WeaponMaster[] Weapons;
     public WeaponMaster MainWeapon;
-    public Animator SSGAnim;
-    public ParticleSystem SSGFireParticle;
 
     float CurrentJump = 0;
     bool Dashing = false;
+    bool Dead = false;
 
-    CharacterController cCont;
+    [HideInInspector]
+    public CharacterController cCont;
     Camera mainCam;
     Vector3 movDelta;
     Vector3 movForward;
@@ -33,17 +34,63 @@ public class FPControl : MonoBehaviour
     float DashEnergy = 4;
     int JumpCount = 2;
 
+    Coroutine WeaponChangeRoutine;
+    PlayerHealth pHealthComp;
+
     // Start is called before the first frame update
     void Start()
     {
         mainCam = Camera.main;
         cCont = GetComponent<CharacterController>();
+        pHealthComp = GetComponent<PlayerHealth>();
         movDelta = new Vector3(0, 0, 0);
         movForward = transform.forward;
+        MainWeapon = Weapons[0];
+
+        pHealthComp.ev_obj_hchange += PHealthComp_ev_obj_hchange;
+        pHealthComp.ev_obj_death += PHealthComp_ev_obj_death;
+
         CursorLock();
-        SSGAnim.SetTrigger("Pullout");
     }
-    void FOVKick(float amount)
+
+    private void PHealthComp_ev_obj_death(IHasHealth dead_object)
+    {
+        if (Dead)
+            return;
+
+        Dead = true;
+        mainCam.transform.GetChild(0).gameObject.SetActive(false);
+        mainCam.gameObject.AddComponent<SphereCollider>();
+        mainCam.gameObject.AddComponent<Rigidbody>();
+        mainCam.transform.parent = null;
+    }
+
+    private void PHealthComp_ev_obj_hchange(IHasHealth target_object)
+    {
+        Debug.Log($"Health Changed : {target_object.GetHealth()}");
+    }
+
+    public void Shock(Vector3 forward, float amount)
+    {
+        FOVKick(amount);
+        StartCoroutine(ShockRoutine(forward, amount));
+    }
+
+    IEnumerator ShockRoutine(Vector3 forward, float amount, float duration = 0.5f)
+    {
+        float timer = duration;
+        float mult = 1f;
+        while (timer > 0)
+        {
+            cCont.Move(forward * amount * mult * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+            mult = timer / duration;
+            timer -= Time.deltaTime;
+        }
+
+    }
+
+    public void FOVKick(float amount)
     {
         cam_x_angle_recover = mainCam.transform.localEulerAngles.x;
         cam_x_angle_kicked = mainCam.transform.localEulerAngles.x - amount;
@@ -70,6 +117,14 @@ public class FPControl : MonoBehaviour
         }
     }
 
+    IEnumerator ChangeRoutine(int slot)
+    {
+        yield return StartCoroutine(MainWeapon.HideWeapon());
+        Weapons[slot].gameObject.SetActive(true);
+        MainWeapon = Weapons[slot];
+        WeaponChangeRoutine = null;
+    }
+
     void CursorLock(bool locked = true)
     {
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.None;
@@ -78,6 +133,8 @@ public class FPControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Dead)
+            return;
         // 시점변경
         msDelta.x = Input.GetAxis("Mouse X");
         msDelta.y = Input.GetAxis("Mouse Y") * -1;
@@ -87,10 +144,15 @@ public class FPControl : MonoBehaviour
         if (Input.GetButtonDown("Fire1"))
         {
             // 테스트 : 슈퍼 샷건
-            MainWeapon.ShootWeaponSingle();
-            SSGAnim.SetTrigger("Shoot");
-            FOVKick(5);
-            SSGFireParticle.Play();
+            if (MainWeapon.ShootWeaponSingle())
+                FOVKick(5);
+        }
+        if (WeaponChangeRoutine == null)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+                WeaponChangeRoutine = StartCoroutine(ChangeRoutine(0));
+            if (Input.GetKeyDown(KeyCode.Alpha2))
+                WeaponChangeRoutine = StartCoroutine(ChangeRoutine(1));
         }
 
         if (!Dashing)
@@ -101,7 +163,8 @@ public class FPControl : MonoBehaviour
             // 캐릭터 이동
             GetForward(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             cCont.Move(movForward * Time.deltaTime);
-            SSGAnim.SetFloat("WalkBlend", movForward.magnitude);
+            if (MainWeapon.WeaponAnimator != null)
+                MainWeapon.WeaponAnimator.SetFloat("WalkBlend", movForward.magnitude);
             // 점프
             if (Input.GetKeyDown(KeyCode.Space) && JumpCount > 0)
             {
@@ -151,7 +214,7 @@ public class FPControl : MonoBehaviour
         }
         else
             v = 1;
-        GetForward(h,v);
+        GetForward(h, v);
         while (second < DashTime)
         {
             cCont.Move(movForward * Time.deltaTime * DashMult);

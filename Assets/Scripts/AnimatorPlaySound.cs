@@ -7,6 +7,7 @@ using UnityEngine.Rendering;
 
 public class AnimatorPlaySound : MonoBehaviour
 {
+    public bool PlayOneShot = true;
     public AudioClip[] clips;
     Dictionary<string, AudioClip> clip_dict;
     public AudioSource source;
@@ -33,7 +34,13 @@ public class AnimatorPlaySound : MonoBehaviour
                 source.clip = clip_dict[clip_name];
             else
                 source.clip = clips[Random.Range(0,clips.Length)];
-            source.Play();
+            if (PlayOneShot)
+            {
+                source.PlayOneShot(source.clip);
+            }
+            else
+                source.Play();
+           
         }
         catch (System.Exception E)
         {

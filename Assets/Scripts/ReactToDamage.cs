@@ -19,6 +19,8 @@ namespace arena
             void OnDeath(IHasHealth object_info);
             void OnHealthChange(IHasHealth object_info);
             void Kill();
+            float GetRatio();
+            int GetHealth();
         }
         /// <summary>
         /// IJointCharacter - 
@@ -54,6 +56,9 @@ namespace arena
             public event OnObjectDeath ev_obj_death;
             public event OnObjectHealthChange ev_obj_hchange;
 
+            public static event OnObjectDeath ev_obj_death_const;
+            public static event OnObjectHealthChange ev_obj_hchange_const;
+
             public virtual void Damage(DamageParam param)
             {
                 CurrentHealth -= (int)param.damage;
@@ -84,11 +89,13 @@ namespace arena
             public virtual void OnDeath(IHasHealth object_info)
             {
                 ev_obj_death?.Invoke(this);
+                ev_obj_death_const?.Invoke(this);
             }
 
             public virtual void OnHealthChange(IHasHealth object_info)
             {
                 ev_obj_hchange?.Invoke(this);
+                ev_obj_hchange_const?.Invoke(this);
             }
 
             public virtual void SetHealth(int health)
@@ -107,6 +114,16 @@ namespace arena
             public virtual void Update()
             {
 
+            }
+
+            public float GetRatio()
+            {
+                return CurrentHealth / (float)MaxHealth;
+            }
+
+            public int GetHealth()
+            {
+                return CurrentHealth;
             }
         }
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6679883642397270173}
   - component: {fileID: 6809043428381797461}
   - component: {fileID: 6807916724564997989}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SmokeTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4765,7 +4765,7 @@ GameObject:
   - component: {fileID: 6679453386447263845}
   - component: {fileID: 6809160121516004915}
   - component: {fileID: 6807208904697269877}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Embers (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9496,7 +9496,7 @@ GameObject:
   - component: {fileID: 6677914786483473253}
   - component: {fileID: 6808946587380787269}
   - component: {fileID: 6807500991228236129}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14308,7 +14308,7 @@ GameObject:
   - component: {fileID: 6678162866563552843}
   - component: {fileID: 6774537262761975769}
   - component: {fileID: 6807314782847466261}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Debris
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19121,7 +19121,7 @@ GameObject:
   - component: {fileID: 6678171949913147421}
   - component: {fileID: 6808627688114820655}
   - component: {fileID: 6807433154121990131}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: AdditonalSmoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23951,7 +23951,7 @@ GameObject:
   - component: {fileID: 6677930080003600177}
   - component: {fileID: 6808468068153015173}
   - component: {fileID: 6809288047949170201}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28763,7 +28763,7 @@ GameObject:
   - component: {fileID: 6677717762754507715}
   - component: {fileID: 6809094557557512671}
   - component: {fileID: 6809296688905863905}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Embers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33497,7 +33497,8 @@ GameObject:
   - component: {fileID: 6807670552711825253}
   - component: {fileID: 8632821905869295321}
   - component: {fileID: 3728646821790648363}
-  m_Layer: 0
+  - component: {fileID: -1902406442286207422}
+  m_Layer: 9
   m_Name: RPG7Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33511,7 +33512,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6683188903430595717}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 207.23293, y: 2.51, z: 105.46402}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
@@ -38350,7 +38351,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3728646821790648363
 MonoBehaviour:
@@ -38364,8 +38365,105 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659c6ce52168e5b43b4e379ce4447dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Size: 2
   lifetime: 2
   type: 0
   effect_duration: 0
   Damage: 100
   Kick: 10
+--- !u!82 &-1902406442286207422
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6683188903430595717}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 12941dff2b6a8a94d8b0c4ef9d448c0e, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 50
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

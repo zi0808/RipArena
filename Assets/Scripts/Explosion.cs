@@ -11,7 +11,7 @@ public class Explosion : MonoBehaviour
         Default,
         Continous
     }
-
+    public float Size = 4;
     public float lifetime = 2;
     [Header("Effect Parameters")]
     public DamageType type;
@@ -40,11 +40,12 @@ public class Explosion : MonoBehaviour
     {
         if (Used)
             return;
-
+        float distance = Vector3.Distance(transform.position, other.transform.position) / Size;
+        distance = Mathf.Clamp(distance, 0f, 0.75f);
         exp_param = new DamageParam
         {
             pos = other.ClosestPoint(transform.position),
-            damage = Damage,
+            damage = (uint)( Damage * (1f - distance)),
             kick = Kick,
             forward = (other.ClosestPoint(transform.position) - transform.position).normalized
         };

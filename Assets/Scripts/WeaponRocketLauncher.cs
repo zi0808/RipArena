@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class WeaponRocketLauncher : MonoBehaviour, IShootable
 {
+    public Transform FirePoint;
     public GameObject Prefab;
 
     public void Shoot()
     {
-        Instantiate(Prefab, transform.position,
-            Quaternion.Euler(transform.eulerAngles + transform.localEulerAngles));
+        Instantiate(Prefab, FirePoint.position,
+            FirePoint.rotation);
     }
 
     // Start is called before the first frame update

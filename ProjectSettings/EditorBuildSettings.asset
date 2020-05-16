@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/FreeDungeon/DemoScene.unity
-    guid: f103539b8d002d648917507fcb1b8eea
+    path: Assets/Scenes/Arena.unity
+    guid: c6ee336fdc3b2df419060caec98f61f4
   m_configObjects: {}
