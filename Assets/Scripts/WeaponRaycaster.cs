@@ -99,6 +99,7 @@ namespace arena.combat
                 GameObject ParticleObj = Instantiate(HitEffect.gameObject);
                 ParticleObj.transform.position = rhit.point;
                 ParticleObj.transform.forward = rhit.normal;
+                ParticleObj.GetComponent<ParticleSystem>().Play();
                 float DistanceMult = rhit.distance > minDistance ?
                     1.0f - rhit.distance / maxDistance : 1;
                 uint CalibratedDamage = (uint)(Damage * DistanceMult);
@@ -110,11 +111,10 @@ namespace arena.combat
                     pos = rhit.point,
                     kick = (int)(CalibratedDamage * KickMult),
                 };
-
-                rhit.collider.GetComponent<IHasHealth>()?.Damage(param);
-                rhit.collider.gameObject.SendMessage("Damage", param,
-                    SendMessageOptions.DontRequireReceiver);
                 Destroy(ParticleObj, 10f);
+                rhit.collider.GetComponent<IHasHealth>()?.Damage(param);
+                /*rhit.collider.gameObject.SendMessage("Damage", param,
+                    SendMessageOptions.DontRequireReceiver);*/
             }
         }
     }

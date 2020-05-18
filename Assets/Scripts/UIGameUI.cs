@@ -90,6 +90,9 @@ public class UIGameUI : MonoBehaviour
         AmmoCounter.text = current_ammo.ToString();
         for (int i = 0; i < current_max_ammo_cnt; i++)
         {
+            if (i >= AmmoCounterParent.transform.childCount)
+                break;
+
             GameObject G = AmmoCounterParent.transform.GetChild(i).gameObject;
             G.transform.GetChild(0).gameObject.SetActive(current_ammo >= i + 1);
         }

@@ -4962,6 +4962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659c6ce52168e5b43b4e379ce4447dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Size: 4
   lifetime: 2
   type: 0
   effect_duration: 0.1
@@ -4997,7 +4998,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5986361267329570673
 Transform:
   m_ObjectHideFlags: 0
@@ -19024,6 +19025,10 @@ PrefabInstance:
     - target: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1834016579923706, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
       propertyPath: m_Layer

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Minigun
+  m_Controller: {fileID: 9100000, guid: 9e0235b7b1b170a44bcd7b0522946f75, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 133978f371531804089b21e966d37fda, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a11bfe929d4df534d8eb15ca692c44f1, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4226643e35c222e4cbdd23665cc53e92, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: f172e7e2ca15aaa4ea52a3a31b9fe313, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 25a1a7cb9a14d8c4baa1ce543c0cb7c9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3026a337b5d09b347bc49e52eeb5bbbe, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 14778f3aee041f644a29fbe29f875979, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a11bfe929d4df534d8eb15ca692c44f1, type: 2}

@@ -119,6 +119,9 @@ public class FPControl : MonoBehaviour
 
     IEnumerator ChangeRoutine(int slot)
     {
+        if (Weapons[slot] == MainWeapon)
+            yield break;
+
         yield return StartCoroutine(MainWeapon.HideWeapon());
         Weapons[slot].gameObject.SetActive(true);
         MainWeapon = Weapons[slot];
@@ -143,9 +146,16 @@ public class FPControl : MonoBehaviour
         // 지금 가진 무기 발사
         if (Input.GetButtonDown("Fire1"))
         {
-            // 테스트 : 슈퍼 샷건
-            if (MainWeapon.ShootWeaponSingle())
+            if (MainWeapon.FullAuto)
+                MainWeapon.StartFiring();
+            else if (MainWeapon.ShootWeaponSingle())
                 FOVKick(5);
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            if (MainWeapon.FullAuto)
+                MainWeapon.StopFiring();
+
         }
         if (WeaponChangeRoutine == null)
         {
@@ -153,6 +163,8 @@ public class FPControl : MonoBehaviour
                 WeaponChangeRoutine = StartCoroutine(ChangeRoutine(0));
             if (Input.GetKeyDown(KeyCode.Alpha2))
                 WeaponChangeRoutine = StartCoroutine(ChangeRoutine(1));
+            if (Input.GetKeyDown(KeyCode.Alpha3))
+                WeaponChangeRoutine = StartCoroutine(ChangeRoutine(2));
         }
 
         if (!Dashing)
