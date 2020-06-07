@@ -3,8 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using arena.combat;
 
-public class FPControl : MonoBehaviour
+public class FPControl : Singleton<FPControl>
 {
+    public enum GameStatus
+    {
+        Waiting,
+        Playing,
+        Over,
+    }
+
+    [HideInInspector]
+    public GameStatus CurrentStat = GameStatus.Waiting;
     public float MoveSpeed = 4f;
     public float DashMult = 20f;
     public float DashTime = 0.15f;
@@ -12,6 +21,7 @@ public class FPControl : MonoBehaviour
     public float Gravity = 20f;
     public WeaponMaster[] Weapons;
     public WeaponMaster MainWeapon;
+    public ParticleSystem DashParticle;
 
     float CurrentJump = 0;
     bool Dashing = false;
@@ -41,6 +51,7 @@ public class FPControl : MonoBehaviour
     void Start()
     {
         mainCam = Camera.main;
+        mainCam.transform.GetChild(0).gameObject.SetActive(false);
         cCont = GetComponent<CharacterController>();
         pHealthComp = GetComponent<PlayerHealth>();
         movDelta = new Vector3(0, 0, 0);
@@ -49,7 +60,14 @@ public class FPControl : MonoBehaviour
 
         pHealthComp.ev_obj_hchange += PHealthComp_ev_obj_hchange;
         pHealthComp.ev_obj_death += PHealthComp_ev_obj_death;
+    }
 
+    public void SwitchToPlayMode()
+    {
+        mainCam.transform.GetChild(0).gameObject.SetActive(true);
+        BGMPlayer.Instance.Play();
+        CurrentStat = GameStatus.Playing;
+        SpawnPoint.ActivateAll();
         CursorLock();
     }
 
@@ -57,7 +75,7 @@ public class FPControl : MonoBehaviour
     {
         if (Dead)
             return;
-
+        BGMPlayer.Instance.Fadeout();
         Dead = true;
         mainCam.transform.GetChild(0).gameObject.SetActive(false);
         mainCam.gameObject.AddComponent<SphereCollider>();
@@ -136,7 +154,7 @@ public class FPControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Dead)
+        if (Dead || CurrentStat != GameStatus.Playing)
             return;
         // 시점변경
         msDelta.x = Input.GetAxis("Mouse X");
@@ -209,6 +227,7 @@ public class FPControl : MonoBehaviour
     {
         if (DashEnergy < 2)
             yield break;
+        DashParticle.Play();
         UIGameUI.Instance.HitDash();
         DashEnergy -= 2;
         UIGameUI.Instance.ShowDashAvailable((int)(DashEnergy / 2));

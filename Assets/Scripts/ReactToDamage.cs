@@ -82,8 +82,8 @@ namespace arena
             public void Kill()
             {
                 CurrentHealth = 0;
-                Dead = true;
                 OnDeath(this);
+                Dead = true;
             }
 
             public virtual void OnDeath(IHasHealth object_info)

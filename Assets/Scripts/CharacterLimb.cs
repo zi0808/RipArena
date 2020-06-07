@@ -27,6 +27,9 @@ public class CharacterLimb : ReactToDamage
     }
     public override void Damage(DamageParam param)
     {
+        if (Dead)
+            return;
+
         base.Damage(param);
         DamageParam new_param = new DamageParam
         {

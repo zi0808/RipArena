@@ -1,4 +1,5 @@
 ﻿using arena.combat;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,14 @@ using UnityEngine.UI;
 
 public class UIGameUI : MonoBehaviour
 {
+    [Header("Groups")]
     public GameObject GroupDefault;
     public GameObject GroupGameOver;
+    public GameObject GroupPrepare;
+    [Header("Start Screen Tweens")]
+    public List<GameObject> StartTweenObjects;
+    public List<GameObject> StartHideObjects;
+    public AudioClip Clip_Begin;
 
     public static UIGameUI Instance
     {
@@ -25,6 +32,8 @@ public class UIGameUI : MonoBehaviour
     public Image HitEffect;
     public Text PHealthText;
 
+    public Text KillCount;
+
     public Sprite[] Sprite_DashIcons;
     public Image DashIconImage;
     public Image[] DashBars;
@@ -35,10 +44,16 @@ public class UIGameUI : MonoBehaviour
     public Text AmmoCounter;
     Coroutine DashHitRoutine = null;
     int current_max_ammo_cnt = 4;
+    int current_killcount = 0;
+    AudioSource AS;
 
     void Start()
     {
         //ReactToDamage.
+        AS = GetComponent<AudioSource>();
+        GroupPrepare.SetActive(true);
+        GroupDefault.SetActive(false);
+        GroupGameOver.SetActive(false);
         ReactToDamage.ev_obj_hchange_const += PlayerHealth_ev_obj_hchange_const;
         ReactToDamage.ev_obj_death_const += ReactToDamage_ev_obj_death_const;
     }
@@ -63,12 +78,71 @@ public class UIGameUI : MonoBehaviour
 
     private void OnDestroy()
     {
+        ReactToDamage.ev_obj_hchange_const -= PlayerHealth_ev_obj_hchange_const;
+        ReactToDamage.ev_obj_death_const -= ReactToDamage_ev_obj_death_const;
+    }
+
+    void PlayMode()
+    {
+        //GroupPrepare.SetActive(false);
+        GroupDefault.SetActive(true);
+        FPControl.Instance.SwitchToPlayMode();
+        AS.clip = Clip_Begin;
+        AS.Play();
+        StartCoroutine(StartGameTween());
+    }
+
+    IEnumerator StartGameTween()
+    {
+        StartHideObjects.ForEach(x => x.SetActive(false));
+        float timer = 0;
+        float duration = 2f;
+        float linear = 0;
+
+        Action<MaskableGraphic, float> change_alpha = (mg, a) =>
+         {
+             Color cc = mg.color;
+             cc.a = a;
+             mg.color = cc;
+         };
+
+        while (timer < duration)
+        {
+            linear = timer / duration;
+            Vector3 newscale = new Vector3(1 + linear, 1, 1);
+            float alpha = 1f - linear;
+            StartTweenObjects.ForEach((element) =>
+           {
+               element.transform.localScale = newscale;
+               MaskableGraphic current_image = element.GetComponent<MaskableGraphic>();
+               change_alpha(current_image, alpha);
+           });
+            StartHideObjects.ForEach((element) =>
+            {
+                MaskableGraphic image = element.GetComponent<MaskableGraphic>();
+                change_alpha(image, alpha);
+            });
+            yield return new WaitForEndOfFrame();
+            timer += Time.deltaTime;
+        }
+        GroupPrepare.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (FPControl.Instance.CurrentStat == FPControl.GameStatus.Waiting)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+                PlayMode();
+        }
+    }
+
+    public void AddKill()
+    {
+        current_killcount++;
+        KillCount.text = current_killcount.ToString();
     }
 
     public void HitDash()

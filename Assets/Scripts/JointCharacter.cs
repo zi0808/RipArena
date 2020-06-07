@@ -57,15 +57,21 @@ public class JointCharacter : ReactToDamage, IJointCharacter
 
     public override void OnDeath(IHasHealth object_info)
     {
+        if (Dead)
+            return;
         base.OnDeath(object_info);
         StopAllCoroutines();
         agent.isStopped = true;
         GetComponent<Collider>().enabled = false;
         Ragdoll(true);
+        SpawnPoint.global_amount--;
+        UIGameUI.Instance.AddKill();
     }
 
     public override void Damage(DamageParam param)
     {
+        if (Dead)
+            return;
         base.Damage(param);
         if (param.kick > 0)
         {
