@@ -75,6 +75,7 @@ public class FPControl : Singleton<FPControl>
     {
         if (Dead)
             return;
+        CurrentStat = GameStatus.Over;
         BGMPlayer.Instance.Fadeout();
         Dead = true;
         mainCam.transform.GetChild(0).gameObject.SetActive(false);

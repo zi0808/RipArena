@@ -157,9 +157,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9beaf92d6bf122d489bf2b3f09b3966c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FullAuto: 0
   WeaponName: Rocket Launcher
   MaxAmmo: 1
   RechargeDelay: 5
+  Kick: 5
   DelayPerShot: 0.5
   ShowDuration: 0.1
   HideDuration: 0.1
@@ -332,9 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9beaf92d6bf122d489bf2b3f09b3966c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  FullAuto: 0
   WeaponName: Super Shotgun
   MaxAmmo: 2
   RechargeDelay: 1
+  Kick: 5
   DelayPerShot: 0.5
   ShowDuration: 0.1
   HideDuration: 0.1
@@ -15064,6 +15068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 870251946e25a534685ea131b8e8344c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurrentStat: 0
   MoveSpeed: 8
   DashMult: 8
   DashTime: 0.15
@@ -15073,6 +15078,7 @@ MonoBehaviour:
   - {fileID: 3509659022943255079}
   - {fileID: 3509659023073161609}
   MainWeapon: {fileID: 3509659022943255079}
+  DashParticle: {fileID: 0}
   cCont: {fileID: 0}
 --- !u!114 &6849334916539025197
 MonoBehaviour:
@@ -15652,7 +15658,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: e44e98cfa8071284fa9dd1cdc675138c,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: e44e98cfa8071284fa9dd1cdc675138c,
         type: 3}
@@ -15908,7 +15914,7 @@ PrefabInstance:
     - target: {fileID: -927199367670048503, guid: fd53de6ed7e42574dac61807925540ba,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: fd53de6ed7e42574dac61807925540ba,
         type: 3}
