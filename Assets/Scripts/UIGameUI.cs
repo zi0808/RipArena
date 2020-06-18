@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIGameUI : MonoBehaviour
@@ -64,6 +65,18 @@ public class UIGameUI : MonoBehaviour
             return;
         GroupDefault.SetActive(false);
         GroupGameOver.SetActive(true);
+        StartCoroutine(AwaitReset());
+    }
+
+    IEnumerator AwaitReset()
+    {
+        while (true)
+        {
+            yield return new WaitForEndOfFrame();
+            if (Input.GetKeyDown(KeyCode.Space))
+                break;
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private void PlayerHealth_ev_obj_hchange_const(IHasHealth target_object)

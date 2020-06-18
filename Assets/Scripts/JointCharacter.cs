@@ -66,6 +66,7 @@ public class JointCharacter : ReactToDamage, IJointCharacter
         Ragdoll(true);
         SpawnPoint.global_amount--;
         UIGameUI.Instance.AddKill();
+        Destroy(gameObject, 10f);
     }
 
     public override void Damage(DamageParam param)
