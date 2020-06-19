@@ -14,6 +14,7 @@ public class CharacterLimb : ReactToDamage
 
     static GameObject particle_blood_loop;
     static GameObject particle_blood;
+    static GameObject GibBase;
 
     public override void Start()
     {
@@ -24,6 +25,8 @@ public class CharacterLimb : ReactToDamage
             particle_blood_loop = Resources.Load("Particles/BloodLoop") as GameObject;
         if (particle_blood == null)
             particle_blood = Resources.Load("Particles/BloodOneShot") as GameObject;
+        if (GibBase == null)
+            GibBase = Resources.Load("Gib") as GameObject;
     }
     public override void Damage(DamageParam param)
     {
@@ -74,7 +77,8 @@ public class CharacterLimb : ReactToDamage
             gib_mesh = linked_mesh.sharedMesh;
             gib_mat = linked_mesh.sharedMaterial;
 
-            GameObject gib = new GameObject("Giblet");
+            GameObject gib = Instantiate(GibBase);
+            gib.name = "Giblet";
             gib.transform.position = transform.position;
             gib.transform.rotation = transform.rotation;
             gib.AddComponent<MeshFilter>().sharedMesh = gib_mesh;

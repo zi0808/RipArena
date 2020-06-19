@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerHealth : ReactToDamage
 {
     FPControl current_fp_control;
+    public PlaySounds PainSounds;
     public override void Start()
     {
         base.Start();
@@ -31,6 +32,7 @@ public class PlayerHealth : ReactToDamage
         //current_fp_control.cCont.Move(param.forward * param.kick);
 
         base.Damage(param);
+        PainSounds.PlaySound();
     }
 
 }
