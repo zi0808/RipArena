@@ -16,7 +16,7 @@ public class JointCharacter : ReactToDamage, IJointCharacter
     static FPControl player_target;
     IHasHealth player_health_interface;
     Rigidbody RBody;
-;
+
     public override void Start()
     {
         if (player_target == null)

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8881321198192337375}
   - component: {fileID: 8881321198192337372}
   - component: {fileID: 7376772735381682705}
+  - component: {fileID: -1424190272058084048}
   m_Layer: 0
   m_Name: Gib
   m_TagString: Untagged
@@ -45,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6122c3ce23b45f146bbf31fdd6c0577d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Delay: 1
   NotifyOnCollisionEnter:
     m_PersistentCalls:
       m_Calls:
@@ -57,6 +59,17 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: '##RANDOM##'
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -1424190272058084048}
+        m_MethodName: Make
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   NotifyOnTriggerEnter:
@@ -176,3 +189,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-1424190272058084048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8881321198192337373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a44be18c95b1dc4eb60350a1d464fd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Prefab:
+  - {fileID: 7074803429334441986, guid: 644203604ab43c14b8d2a42df9dbdd1a, type: 3}
+  - {fileID: 7074803429334441986, guid: b4bc2bbd9ef4f244ca67bd491648c94b, type: 3}
+  - {fileID: 7074803429334441986, guid: dd5c8a51419808749bec22151c8d9fdc, type: 3}
+  - {fileID: 7074803429334441986, guid: fa343cfeb7df47645b89a96e4b365cee, type: 3}
+  - {fileID: 7074803429334441986, guid: c3cfb6e8c907f5d4995f1f0d2f6fa91a, type: 3}
+  - {fileID: 7074803429334441986, guid: 10c7aa0edcdc0ec42b8ca93c81544d1e, type: 3}
+  - {fileID: 7074803429334441986, guid: ba3a9b1db76d4dd4abb13b6637c0010a, type: 3}
+  - {fileID: 7074803429334441986, guid: 59dc043701294ff42aa89b576bbb1d68, type: 3}
+  Count: 1
+  PRandomizer: {x: -0.25, y: 0, z: -0.25}
+  RRandomizer: {x: 0, y: 0, z: 360}
+  ThisAsParent: 0
